@@ -1,0 +1,84 @@
+# ---------------------------------------------------
+# Unity (projeto VR) — .gitignore
+# Os padroes nao usam "/" inicial de proposito, para
+# funcionarem com o projeto dentro da pasta "First VR/".
+# ---------------------------------------------------
+
+# Pastas geradas pelo Unity (cache/build — nunca commitar)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Cache de asset store / pacotes
+[Aa]ssets/AssetStoreTools*
+[Aa]ssets/[Ss]treamingAssets/aa.meta
+[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Addressables (dados gerados de build)
+[Ss]erverData/
+[Aa]ssets/AddressableAssetsData/*/*.bin*
+[Aa]ssets/AddressableAssetsData/link.xml*
+
+# Arquivos de projeto de IDE gerados automaticamente
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.vsconfig
+
+# Builds / binarios
+*.apk
+*.aab
+*.unitypackage
+*.unitypackage.meta
+*.app
+ExportedObj/
+.consulo/
+[Bb]uild[Ss]ettings.asset.bak
+
+# Crashlytics / Unity Analytics
+crashlytics-build.properties
+sysinfo.txt
+
+# Gradle / Android (build VR standalone: Quest, Pico)
+[Aa]ssets/[Pp]lugins/[Aa]ndroid/*.jar
+[Aa]ssets/[Pp]lugins/[Aa]ndroid/libs/
+.gradle/
+local.properties
+*.keystore
+!*.keystore.meta
+
+# OpenXR / XR — cache e chaves locais
+[Aa]ssets/XR/UserSimulationSettings/
+[Aa]ssets/Oculus/**/*.dll.meta.bak
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Segredos / config local
+*.env
+.env.local
+secrets.json
