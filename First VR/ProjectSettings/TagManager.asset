@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 3
   tags:
   - Anchor
+  - TubeSocket
+  - ZonaDerramar
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Obstaculos
   - Water
   - UI
   - 
@@ -51,3 +53,4 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
+  m_MigratedRenderPipelines: []
