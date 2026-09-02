@@ -281,11 +281,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.63063
+      value: -5.23
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.21109581
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.x
@@ -293,7 +293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.9774654
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.z
@@ -305,7 +305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 204.373
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -982,7 +982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8260440689860001654, guid: 516f487df69ffb1468349b392aa5191f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.81535995
+      value: 0.82
       objectReference: {fileID: 0}
     - target: {fileID: 8260440689860001654, guid: 516f487df69ffb1468349b392aa5191f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -990,7 +990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8260440689860001654, guid: 516f487df69ffb1468349b392aa5191f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.5526295
+      value: -5.42
       objectReference: {fileID: 0}
     - target: {fileID: 8260440689860001654, guid: 516f487df69ffb1468349b392aa5191f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1034,6 +1034,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8529918307212995351, guid: 516f487df69ffb1468349b392aa5191f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1134810302}
+    - targetCorrespondingSourceObject: {fileID: 8529918307212995351, guid: 516f487df69ffb1468349b392aa5191f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1134810308}
   m_SourcePrefab: {fileID: 100100000, guid: 516f487df69ffb1468349b392aa5191f, type: 3}
 --- !u!1 &344558357
 GameObject:
@@ -2459,7 +2462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 1201173925}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -2603,6 +2607,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!59 &1134810308
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134810297}
+  serializedVersion: 3
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0.5, z: -0.45}
+  m_Axis: {x: 0, y: 1, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_UseSpring: 0
+  m_Spring:
+    spring: 0
+    damper: 0
+    targetPosition: 0
+  m_UseMotor: 0
+  m_Motor:
+    targetVelocity: 0
+    force: 0
+    freeSpin: 0
+  m_UseLimits: 1
+  m_ExtendedLimits: 0
+  m_UseAcceleration: 0
+  m_Limits:
+    min: -120
+    max: 1
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &1142473107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2634,6 +2677,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 457324399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1201173925 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3534163719070702149, guid: 516f487df69ffb1468349b392aa5191f, type: 3}
+  m_PrefabInstance: {fileID: 320781307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1235378147 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1971085608484540914, guid: 90dbb427ac5963541b1cdbc7520999e3, type: 3}
