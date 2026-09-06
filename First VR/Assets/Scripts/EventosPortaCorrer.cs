@@ -31,20 +31,15 @@ public class EventosPortaCorrer : MonoBehaviour
 
     void Update()
     {
+        if (isOpen)
+            return;
+
         float abertura = Mathf.Abs(GetJointLinearX());
 
-        if (!isOpen && abertura >= 0.6)
+        if (abertura >= 0.6)
         {
             isOpen = true;
             teleporte.enabled = true;
-        }
-        else
-        {
-            if (isOpen && abertura < 0.6)
-            {
-                isOpen = false;
-                teleporte.enabled = false;
-            }
         }
     }
 }

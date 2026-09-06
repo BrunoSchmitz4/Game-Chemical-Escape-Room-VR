@@ -17,22 +17,16 @@ public class EventosPorta : MonoBehaviour
 
     void Update()
     {
+        if (isOpen)
+            return;
+
         float angle = hinge.angle;
 
-        if (!isOpen && angle <= -40)
+        if (angle <= -40)
         {
             isOpen = true;
             teleporte.enabled = true;
             grabPorta.enabled = true;
-        }
-        else
-        {
-            if (isOpen && angle > -40)
-            {
-                isOpen = false;
-                teleporte.enabled = false;
-                grabPorta.enabled = false;
-            }
         }
     }
 }
