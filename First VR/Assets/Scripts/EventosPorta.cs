@@ -17,14 +17,14 @@ public class EventosPorta : MonoBehaviour
     {
         float angle = hinge.angle;
 
-        if (!isOpen && angle == -120)
+        if (!isOpen && angle <= -40)
         {
             isOpen = true;
             teleporte.enabled = true;
         }
         else
         {
-            if (isOpen && angle > -119)
+            if (isOpen && angle > -40)
             {
                 isOpen = false;
                 teleporte.enabled = false;
