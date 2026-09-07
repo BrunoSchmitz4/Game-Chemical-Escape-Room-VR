@@ -1,0 +1,2 @@
+C:\Users\bruno\Desenvolvimento\Desenvolvimento de Jogos\First-VR-Game\First VR\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\bruno\Desenvolvimento\Desenvolvimento de Jogos\First-VR-Game\First VR\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

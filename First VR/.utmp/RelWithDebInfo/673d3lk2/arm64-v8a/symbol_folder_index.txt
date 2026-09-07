@@ -1,0 +1,1 @@
+C:\Users\bruno\Desenvolvimento\Desenvolvimento de Jogos\First-VR-Game\First VR\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\673d3lk2\obj\arm64-v8a
