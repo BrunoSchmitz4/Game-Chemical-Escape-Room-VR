@@ -8,6 +8,7 @@ public class EventosPortaCorrer : MonoBehaviour
     private ConfigurableJoint joint;
 
     public TeleportationArea teleporte;
+    public Outline outlinePorta;
 
     void Start()
     {
@@ -40,6 +41,7 @@ public class EventosPortaCorrer : MonoBehaviour
         {
             isOpen = true;
             teleporte.enabled = true;
+            outlinePorta.OutlineWidth = 0f;
         }
     }
 }
