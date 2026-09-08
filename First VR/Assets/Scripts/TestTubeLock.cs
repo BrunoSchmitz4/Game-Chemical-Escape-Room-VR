@@ -67,6 +67,8 @@ public class TestTubeLock : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
+        GetComponent<TuboLiquido>().Encher();
+
         LockInRack();
     }
 }

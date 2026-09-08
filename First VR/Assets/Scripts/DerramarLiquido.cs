@@ -3,37 +3,67 @@ using UnityEngine;
 public class DerramarLiquido : MonoBehaviour
 {
     [SerializeField]
-    private float anguloMin = 100f; // Ângulo mínimo para considerar "virado" 
+    private float anguloMin = 85f;
 
-    private bool inZonaDerramar = false;
+    public float velocidade = 0.5f;
+    public AudioSource somDerramar;
+
+    private TuboLiquido tubo;
+    private Outline contorno;
+    private Bequer bequerAtual;
     private bool estahDerramando = false;
+
+    void Start()
+    {
+        tubo = GetComponent<TuboLiquido>();
+        contorno = GetComponent<Outline>();
+    }
 
     void Update()
     {
-        if (!inZonaDerramar || estahDerramando)
-            return;
+        bool deveDerramar = PodeDerramar();
 
-        float angulo = Vector3.Angle(transform.up, Vector3.up);
+        if (deveDerramar)
+            Derramar();
 
-        if (angulo > anguloMin)
+        if (deveDerramar != estahDerramando)
         {
-            Pour();
+            estahDerramando = deveDerramar;
+
+            if (estahDerramando)
+            {
+                somDerramar.Play();
+                print("Derramando tubo " + tubo.idTubo);
+            }
+            else
+            {
+                somDerramar.Stop();
+            }
         }
     }
 
-    void Pour()
+    bool PodeDerramar()
     {
-        estahDerramando = true;
-        print("Ingrediente derramado!");
+        if (bequerAtual == null || !tubo.TemLiquido())
+            return false;
+
+        return Vector3.Angle(transform.up, Vector3.up) > anguloMin;
+    }
+
+    void Derramar()
+    {
+        float quantidade = tubo.Retirar(velocidade * Time.deltaTime);
+        bequerAtual.Receber(tubo.idTubo, tubo.cor, quantidade / 3f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("ZonaDerramar"))
         {
-            gameObject.GetComponent<Outline>().OutlineWidth = 5f;
-            inZonaDerramar = true;
-            print("In ZonaDerramar!");
+            contorno.OutlineWidth = 5f;
+            bequerAtual = other.GetComponentInParent<Bequer>();
+            print("Tubo " + tubo.idTubo + " entrou em " + bequerAtual.name +
+                  " | incline mais de " + anguloMin + " graus para derramar");
         }
     }
 
@@ -41,9 +71,8 @@ public class DerramarLiquido : MonoBehaviour
     {
         if (other.CompareTag("ZonaDerramar"))
         {
-            gameObject.GetComponent<Outline>().OutlineWidth = 0f;
-            inZonaDerramar = false;
-            print("Out ZonaDerramar!");
+            contorno.OutlineWidth = 0f;
+            bequerAtual = null;
         }
     }
 }
