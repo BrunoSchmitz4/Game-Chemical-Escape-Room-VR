@@ -7,6 +7,7 @@ public class EventosPorta : MonoBehaviour
     private bool isOpen = false;
     private HingeJoint hinge;
     public TeleportationArea teleporte;
+    public Outline outlinePorta;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class EventosPorta : MonoBehaviour
         {
             isOpen = true;
             teleporte.enabled = true;
+            outlinePorta.OutlineWidth = 0f;
         }
     }
 }
