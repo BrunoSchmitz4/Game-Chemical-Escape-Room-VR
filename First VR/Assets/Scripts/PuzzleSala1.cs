@@ -9,6 +9,7 @@ public class PuzzleSala1 : MonoBehaviour
     public EventosPorta eventosPorta;
     public XRGrabInteractable grabPorta;
     public AudioSource somVitoria;
+    public bool diagnostico = true;
 
     private bool[] jaCorreto;
     private int indice = 0;
@@ -31,6 +32,9 @@ public class PuzzleSala1 : MonoBehaviour
         {
             bool correto = sequencia[i].EstaCorreto();
 
+            if (diagnostico && correto != jaCorreto[i])
+                Debug.Log("[Puzzle1] mudou -> " + sequencia[i].Resumo() + " | indice=" + indice);
+
             if (correto && !jaCorreto[i])
                 Registrar(i);
 
@@ -38,14 +42,40 @@ public class PuzzleSala1 : MonoBehaviour
         }
     }
 
+    public void Reiniciar()
+    {
+        if (resolvido)
+            return;
+
+        indice = 0;
+
+        for (int i = 0; i < jaCorreto.Length; i++)
+            jaCorreto[i] = false;
+    }
+
     void Registrar(int i)
     {
+        if (diagnostico)
+            Debug.Log("[Puzzle1] Registrar(" + i + "=" + sequencia[i].name + ") esperado=" + indice);
+
         if (i == indice)
+        {
             indice = indice + 1;
+        }
         else if (i == 0)
+        {
             indice = 1;
+        }
         else
+        {
             indice = 0;
+
+            if (diagnostico)
+                Debug.LogWarning("[Puzzle1] FORA DE ORDEM: " + sequencia[i].name
+                    + " ficou correto, mas o esperado era " + sequencia[indice].name
+                    + ". A sequencia zerou. Os bequeres que JA estao corretos nao disparam de novo "
+                    + "- e preciso ESVAZIAR e refazer para destravar.");
+        }
 
         if (indice >= sequencia.Length)
             Resolver();
@@ -58,5 +88,8 @@ public class PuzzleSala1 : MonoBehaviour
         grabPorta.enabled = true;
         eventosPorta.enabled = true;
         somVitoria.Play();
+
+        if (diagnostico)
+            Debug.Log("[Puzzle1] RESOLVIDO -> grab do Trinco1 habilitado, Outline aceso");
     }
 }

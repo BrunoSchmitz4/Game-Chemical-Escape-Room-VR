@@ -7,6 +7,7 @@ public class DerramarLiquido : MonoBehaviour
 
     public float velocidade = 0.5f;
     public AudioSource somDerramar;
+    public bool ignorarColisaoComBequer = true;
 
     private TuboLiquido tubo;
     private Outline contorno;
@@ -17,6 +18,34 @@ public class DerramarLiquido : MonoBehaviour
     {
         tubo = GetComponent<TuboLiquido>();
         contorno = GetComponent<Outline>();
+
+        if (ignorarColisaoComBequer)
+            IgnorarColisaoComBequeres();
+    }
+
+    void IgnorarColisaoComBequeres()
+    {
+        Collider[] meus = GetComponentsInChildren<Collider>();
+        Bequer[] bequeres = FindObjectsByType<Bequer>();
+
+        for (int b = 0; b < bequeres.Length; b++)
+        {
+            Collider[] dele = bequeres[b].GetComponentsInChildren<Collider>();
+
+            for (int i = 0; i < meus.Length; i++)
+            {
+                if (meus[i].isTrigger)
+                    continue;
+
+                for (int j = 0; j < dele.Length; j++)
+                {
+                    if (dele[j].isTrigger)
+                        continue;
+
+                    Physics.IgnoreCollision(meus[i], dele[j], true);
+                }
+            }
+        }
     }
 
     void Update()
@@ -31,14 +60,9 @@ public class DerramarLiquido : MonoBehaviour
             estahDerramando = deveDerramar;
 
             if (estahDerramando)
-            {
                 somDerramar.Play();
-                print("Derramando tubo " + tubo.idTubo);
-            }
             else
-            {
                 somDerramar.Stop();
-            }
         }
     }
 
@@ -62,8 +86,6 @@ public class DerramarLiquido : MonoBehaviour
         {
             contorno.OutlineWidth = 5f;
             bequerAtual = other.GetComponentInParent<Bequer>();
-            print("Tubo " + tubo.idTubo + " entrou em " + bequerAtual.name +
-                  " | incline mais de " + anguloMin + " graus para derramar");
         }
     }
 

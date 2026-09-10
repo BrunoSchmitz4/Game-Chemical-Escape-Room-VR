@@ -14,11 +14,17 @@ public class Bequer : MonoBehaviour
 {
     public Transform liquido;
     public float escalaCheio = 1f;
-    public float anguloDescarte = 120f;
+    public float anguloDescarte = 100f;
 
     public Color corAlvo = Color.magenta;
     public float volumeAlvo = 0.66f;
     public List<Combinacao> combinacoes = new List<Combinacao>();
+
+    public bool mostrarMarca = true;
+    public Color corMarca = new Color(0.9f, 0.9f, 0.9f, 1f);
+    public Color corMarcaAtingida = new Color(0.2f, 1f, 0.45f, 1f);
+    public float espessuraMarca = 0.004f;
+    public float folgaMarca = 1.03f;
 
     private List<int> tubos = new List<int>();
     private List<Color> cores = new List<Color>();
@@ -26,6 +32,7 @@ public class Bequer : MonoBehaviour
     private Material material;
     private Vector3 posicaoInicial;
     private Quaternion rotacaoInicial;
+    private Material materialMarca;
 
     void Start()
     {
@@ -35,7 +42,63 @@ public class Bequer : MonoBehaviour
 
         GetComponent<XRGrabInteractable>().selectExited.AddListener(x => VoltarAoLugar());
 
+        if (mostrarMarca)
+            CriarMarca();
+
         Esvaziar();
+    }
+
+    void CriarMarca()
+    {
+        MeshFilter filtroVidro = GetComponent<MeshFilter>();
+        MeshFilter filtroLiquido = liquido.GetComponent<MeshFilter>();
+
+        if (filtroVidro == null || filtroVidro.sharedMesh == null ||
+            filtroLiquido == null || filtroLiquido.sharedMesh == null)
+        {
+            Debug.LogWarning("Bequer " + name + ": sem MeshFilter para calcular a marca de nivel");
+            return;
+        }
+
+        Bounds caixaVidro = filtroVidro.sharedMesh.bounds;
+        Bounds caixaLiquido = filtroLiquido.sharedMesh.bounds;
+
+        float escalaAlvo = escalaCheio * volumeAlvo;
+        float altura = liquido.localPosition.y + caixaLiquido.max.y * escalaAlvo;
+        float raio = Mathf.Max(caixaVidro.extents.x, caixaVidro.extents.z) * folgaMarca;
+
+        GameObject anel = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        anel.name = "MarcaNivel";
+
+        Collider colisorAnel = anel.GetComponent<Collider>();
+        colisorAnel.enabled = false;
+        Destroy(colisorAnel);
+
+        anel.transform.SetParent(transform, false);
+        anel.transform.localPosition = new Vector3(caixaVidro.center.x, altura, caixaVidro.center.z);
+        anel.transform.localRotation = Quaternion.identity;
+        anel.transform.localScale = new Vector3(raio * 2f, espessuraMarca * 0.5f, raio * 2f);
+
+        Renderer renderizador = anel.GetComponent<Renderer>();
+        renderizador.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        renderizador.receiveShadows = false;
+
+        materialMarca = renderizador.material;
+        materialMarca.EnableKeyword("_EMISSION");
+
+        AtualizarMarca();
+    }
+
+    void AtualizarMarca()
+    {
+        if (materialMarca == null)
+            return;
+
+        Color cor = volume >= volumeAlvo ? corMarcaAtingida : corMarca;
+
+        materialMarca.color = cor;
+        materialMarca.SetColor("_BaseColor", cor);
+        materialMarca.SetColor("_EmissionColor", cor * (volume >= volumeAlvo ? 1.2f : 0.1f));
     }
 
     void VoltarAoLugar()
@@ -79,6 +142,27 @@ public class Bequer : MonoBehaviour
             return false;
 
         return CorParecida(CorDaMistura(), corAlvo);
+    }
+
+    public string Resumo()
+    {
+        string ids = "";
+        for (int i = 0; i < tubos.Count; i++)
+            ids = ids + tubos[i] + (i < tubos.Count - 1 ? "+" : "");
+
+        Color mistura = CorDaMistura();
+        float diferenca = Mathf.Abs(mistura.r - corAlvo.r)
+                        + Mathf.Abs(mistura.g - corAlvo.g)
+                        + Mathf.Abs(mistura.b - corAlvo.b);
+
+        return name
+             + " vol=" + volume.ToString("F3") + "/" + volumeAlvo.ToString("F2")
+             + (volume >= volumeAlvo ? " (OK)" : " (FALTA)")
+             + " tubos=[" + ids + "]"
+             + " mistura=" + ColorUtility.ToHtmlStringRGB(mistura)
+             + " alvo=" + ColorUtility.ToHtmlStringRGB(corAlvo)
+             + " dif=" + diferenca.ToString("F3") + (diferenca < 0.15f ? " (OK)" : " (LONGE)")
+             + " => correto=" + EstaCorreto();
     }
 
     Color CorDaMistura()
@@ -127,5 +211,7 @@ public class Bequer : MonoBehaviour
             material.color = cor;
             material.SetColor("_EmissionColor", cor * 0.35f);
         }
+
+        AtualizarMarca();
     }
 }
