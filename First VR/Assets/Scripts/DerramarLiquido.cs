@@ -8,7 +8,6 @@ public class DerramarLiquido : MonoBehaviour
     public float velocidade = 0.5f;
     public AudioSource somDerramar;
     public bool ignorarColisaoComBequer = true;
-    public bool diagnostico = true;
 
     private TuboLiquido tubo;
     private Outline contorno;
@@ -87,10 +86,6 @@ public class DerramarLiquido : MonoBehaviour
         {
             contorno.OutlineWidth = 5f;
             bequerAtual = other.GetComponentInParent<Bequer>();
-
-            if (diagnostico)
-                Debug.Log("[Derramar] tubo " + tubo.idTubo + " (" + name + ") entrou na ZonaDerramar de "
-                    + (bequerAtual != null ? bequerAtual.name : "NENHUM BEQUER (GetComponentInParent falhou)"));
         }
     }
 
@@ -99,11 +94,6 @@ public class DerramarLiquido : MonoBehaviour
         if (other.CompareTag("ZonaDerramar"))
         {
             contorno.OutlineWidth = 0f;
-
-            if (diagnostico)
-                Debug.Log("[Derramar] tubo " + tubo.idTubo + " (" + name + ") saiu da ZonaDerramar de "
-                    + (bequerAtual != null ? bequerAtual.name : "NENHUM"));
-
             bequerAtual = null;
         }
     }

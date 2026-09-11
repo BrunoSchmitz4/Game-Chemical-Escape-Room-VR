@@ -26,8 +26,6 @@ public class Bequer : MonoBehaviour
     public float espessuraMarca = 0.004f;
     public float folgaMarca = 1.03f;
 
-    public bool diagnostico = true;
-
     private List<int> tubos = new List<int>();
     private List<Color> cores = new List<Color>();
     private float volume = 0f;
@@ -116,13 +114,7 @@ public class Bequer : MonoBehaviour
 
         float angulo = Vector3.Angle(transform.up, Vector3.up);
         if (angulo > anguloDescarte)
-        {
-            if (diagnostico)
-                Debug.Log("[Bequer] " + name + " virou " + angulo.ToString("F0")
-                    + " graus (limite " + anguloDescarte + ") -> ESVAZIANDO por inclinacao. " + ListaTubos());
-
             Esvaziar();
-        }
     }
 
     public void Receber(int idTubo, Color cor, float quantidade)
@@ -131,9 +123,6 @@ public class Bequer : MonoBehaviour
         {
             tubos.Add(idTubo);
             cores.Add(cor);
-
-            if (diagnostico)
-                Debug.Log("[Bequer] " + name + " recebeu tubo " + idTubo + " pela primeira vez -> " + ListaTubos());
         }
 
         volume = volume + quantidade;
@@ -142,22 +131,10 @@ public class Bequer : MonoBehaviour
 
     public void Esvaziar()
     {
-        if (diagnostico && tubos.Count > 0)
-            Debug.Log("[Bequer] " + name + " ESVAZIOU (tinha " + ListaTubos() + ", vol=" + volume.ToString("F3") + ")");
-
         tubos.Clear();
         cores.Clear();
         volume = 0f;
         AtualizarVisual();
-    }
-
-    string ListaTubos()
-    {
-        string ids = "";
-        for (int i = 0; i < tubos.Count; i++)
-            ids = ids + tubos[i] + (i < tubos.Count - 1 ? "+" : "");
-
-        return "tubos=[" + ids + "]";
     }
 
     public bool EstaCorreto()

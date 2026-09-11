@@ -29,8 +29,6 @@ public class PuzzleBotoes : MonoBehaviour
         else
             contador = 0;
 
-        print("Contador do puzzle: " + contador);
-
         if (contador >= vezesNecessarias)
             Resolver();
     }
